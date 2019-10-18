@@ -16,7 +16,7 @@ echo "Checking image [${IMAGE_NAME}]"
 while [  ${COUNTER} -lt 60 ] ; do
     echo "$(date): Sleeping 5s"
     sleep 5
-    scan_details=$(/snap/bin/gcloud beta container images describe ${IMAGE_NAME} --show-package-vulnerability --format=json)
+    scan_details=$(gcloud beta container images describe ${IMAGE_NAME} --show-package-vulnerability --format=json)
     if [ $? -ne 0 ]; then
         echo "Error when getting image [${IMAGE_NAME}] details"
         let ERROR_COUNT=ERROR_COUNT+1
