@@ -43,8 +43,8 @@ if [ $SCAN_DONE -ne 1 ]; then
 fi
 
 # Calculate CRITICAL and HIGH vulnerabilities
-critical=$(echo ${scan_details} | jq ".package_vulnerability_summary.vulnerabilities.CRITICAL | length")
-high=$(echo ${scan_details} | jq ".package_vulnerability_summary.vulnerabilities.HIGH | length")
+critical=$(echo ${scan_details} | jq ".package_vulnerability_summary.vulnerabilities | .[] | .[].vulnerabilityDetails.packageIssue[].severityName" | grep -w "CRITICAL" | wc -l)
+high=$(echo ${scan_details} | jq ".package_vulnerability_summary.vulnerabilities | .[] | .[].vulnerabilityDetails.packageIssue[].severityName" | grep -w "HIGH" | wc -l)
 
 if [ ${critical} -eq 1 ]; then
     echo "Found ${critical} CRITICAL vulnerability"
